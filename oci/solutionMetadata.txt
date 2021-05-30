@@ -1,0 +1,16 @@
+"oci-dev-tools.0006": {
+    "solutionExposure": "prod",
+    "name": "${Messages.solutionsHub.solutions.ociDevTools.solutionName()}",
+    "description": "${Messages.solutionsHub.solutions.ociDevTools.stackDescription()}",
+    "longDescription": {
+        "description": "${Messages.solutionsHub.solutions.ociDevTools.longDescription()}"
+    },
+    "icon": {
+        "iconLine1": "Oracle Cloud",
+        "iconLine2": "Development Kit",
+        "iconLine3": "Application"
+    },
+    "terraformVersion": "0.12.x",
+    "isFreeTier": true,
+    "type": "architecture"
+}

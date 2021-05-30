@@ -1,0 +1,110 @@
+title: ${Messages.solutionsHub.solutions.ociDevTools.solutionName()}
+description: ${Messages.solutionsHub.solutions.ociDevTools.longDescription()}
+stackDescription: ${Messages.solutionsHub.solutions.ociDevTools.stackDescription()}
+informationalText: ${Messages.solutionsHub.solutions.ociDevTools.informationalText()}
+schemaVersion: 1.1.0
+version: "20200822"
+locale: "en"
+
+variableGroups:
+- title: ${Messages.solutionsHub.generalConfig()}
+  visible: false
+  variables:
+  - compartment_ocid
+  - tenancy_ocid
+  - region
+  
+- title: ${Messages.solutionsHub.requiredConfig()}
+  visible: true  
+  variables:
+  - instance_shape
+  - generate_ssh_key_pair
+  - ssh_public_key
+  - use_tenancy_level_policy
+
+
+variables:
+  # General Configuration
+  tenancy_ocid:
+    title: Tenancy ID
+    description: The Oracle Cloud Identifier (OCID) for your tenancy
+    type: string
+    required: true
+    visible: false
+
+  region:
+    title: ${Messages.solutionsHub.genericVariables.region.title()}
+    description: ${Messages.solutionsHub.genericVariables.region.description()}
+    type: oci:identity:region:name
+    required: true
+    visible: false
+
+  compartment_ocid:
+    title: ${Messages.solutionsHub.genericVariables.compartment.title()}
+    description: ${Messages.solutionsHub.genericVariables.compartment.description()}
+    type: oci:identity:compartment:id
+    required: true
+    visibile: false
+
+  # Required
+  instance_shape:
+    title: ${Messages.solutionsHub.solutions.ociDevTools.variables.instance_shape.title()}
+    description: ${Messages.solutionsHub.solutions.ociDevTools.variables.instance_shape.description()}
+    type: oci:core:instanceshape:name
+    default: VM.Standard.E2.1.Micro
+    required: true
+    dependsOn:
+      compartmentId: ${compartment_ocid}
+  
+  generate_ssh_key_pair:
+    title: ${Messages.solutionsHub.solutions.ociDevTools.variables.generate_ssh_key_pair.title()}
+    description: ${Messages.solutionsHub.solutions.ociDevTools.variables.generate_ssh_key_pair.description()}
+    type: boolean
+    default: true
+    required: true
+
+  ssh_public_key:
+    title: ${Messages.solutionsHub.solutions.ociDevTools.variables.ssh_public_key.title()}
+    description: ${Messages.solutionsHub.solutions.ociDevTools.variables.ssh_public_key.description()}
+    type: oci:core:ssh:publickey
+    required: false
+    additionalProps:
+      allowMultiple: true
+    pattern: "((^(ssh-rsa AAAAB3NzaC1yc2|ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNT|ecdsa-sha2-nistp384 AAAAE2VjZHNhLXNoYTItbmlzdHAzODQAAAAIbmlzdHAzOD|ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1Mj|ssh-ed25519 AAAAC3NzaC1lZDI1NTE5|ssh-dss AAAAB3NzaC1kc3)[0-9A-Za-z+\/]+[=]{0,3})( [^,]*)?)(,((ssh-rsa AAAAB3NzaC1yc2|ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNT|ecdsa-sha2-nistp384 AAAAE2VjZHNhLXNoYTItbmlzdHAzODQAAAAIbmlzdHAzOD|ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1Mj|ssh-ed25519 AAAAC3NzaC1lZDI1NTE5|ssh-dss AAAAB3NzaC1kc3)[0-9A-Za-z+\/]+[=]{0,3})( [^,]*)?)*$"
+    visible:
+      not:
+        - generate_ssh_key_pair
+
+  use_tenancy_level_policy:
+    title: ${Messages.solutionsHub.solutions.ociDevTools.variables.use_tenancy_level_policy.title()}
+    description: ${Messages.solutionsHub.solutions.ociDevTools.variables.use_tenancy_level_policy.description()}
+    type: boolean
+    default: true
+    required: true
+
+outputGroups:
+  - title: ${Messages.solutionsHub.solutions.ociDevTools.outputGroups.title()}
+    outputs:
+      - compute_instance_public_ip
+      - compartment_id
+      - generated_instance_ssh_private_key
+
+outputs:
+  compute_instance_public_ip:
+    title: ${Messages.solutionsHub.solutions.ociDevTools.outputs.compute_instance_public_ip.title()}
+    displayText: ${Messages.solutionsHub.solutions.ociDevTools.outputs.compute_instance_public_ip.displayText()}
+    type: copyableString
+    visible: true
+
+  compartment_id:
+    title: ${Messages.solutionsHub.solutions.ociDevTools.outputs.compartment_id.title()}
+    displayText: ${Messages.solutionsHub.solutions.ociDevTools.outputs.compartment_id.displayText()}
+    type: string
+    visible: true
+  
+  generated_instance_ssh_private_key:
+    title: ${Messages.solutionsHub.solutions.ociDevTools.outputs.generated_instance_ssh_private_key.title()}
+    displayText: ${Messages.solutionsHub.solutions.ociDevTools.outputs.generated_instance_ssh_private_key.displayText()}
+    type: string
+    visible: true
+
